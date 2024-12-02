@@ -221,8 +221,8 @@ install_and_start_polygon() {
     echo "节点已成功启动，日志可以通过查看容器日志获取。"
 }
 
-# 启动节点celo
-install_and_start_celo() {
+# 启动节点avalanche
+install_and_start_avalanche() {
     read -p "请输入 Validator Name: " VALIDATOR_NAME
 
     while true; do
@@ -243,14 +243,14 @@ install_and_start_celo() {
         gcr.io/abacus-labs-dev/hyperlane-agent:agents-v1.0.0 \
         ./validator \
         --db /hyperlane_db \
-        --originChainName celo \
+        --originChainName avalanche \
         --reorgPeriod 1 \
         --validator.id "$VALIDATOR_NAME" \
         --checkpointSyncer.type localStorage \
-        --checkpointSyncer.path /hyperlane_db/celo_checkpoints \
+        --checkpointSyncer.path /hyperlane_db/avalanche_checkpoints \
         --validator.key "0x$PRIVATE_KEY" \
-        --chains.celo.signer.key "0x$PRIVATE_KEY" \
-        --chains.celo.customRpcUrls "$RPC_URL" &
+        --chains.avalanche.signer.key "0x$PRIVATE_KEY" \
+        --chains.avalanche.customRpcUrls "$RPC_URL" &
 
     echo "节点已成功启动，日志可以通过查看容器日志获取。"
 }
@@ -328,7 +328,7 @@ main_menu() {
         echo "2) 安装并启动bsctestnet节点"
         echo "3) 安装并启动arbitrum节点"
         echo "4) 安装并启动sepolia节点"
-        echo "5) 安装并启动celo节点"
+        echo "5) 安装并启动avalanche节点"
         echo "6) 安装并启动polygon节点"
         echo "7) 安装并启动linea节点"
         echo "8) 查看容器日志"
@@ -341,7 +341,7 @@ main_menu() {
             2) install_and_start_bsctestnet ;;
             3) install_and_start_arbitrum ;;
             4) install_and_start_sepolia ;;
-            5) install_and_start_celo ;;
+            5) install_and_start_avalanche ;;
             6) install_and_start_polygon ;;
             7) install_and_start_linea ;;
             8) view_container_log ;;
