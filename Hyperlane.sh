@@ -116,8 +116,8 @@ install_and_start_bsctestnet() {
     echo "节点已成功启动，日志可以通过查看容器日志获取。"
 }
 
-# 启动节点opbnbtestnet
-install_and_start_opbnbtestnet() {
+# 启动节点arbitrum
+install_and_start_arbitrum() {
 
     read -p "请输入 Validator Name: " VALIDATOR_NAME
 
@@ -139,14 +139,14 @@ install_and_start_opbnbtestnet() {
         gcr.io/abacus-labs-dev/hyperlane-agent:agents-v1.0.0 \
         ./validator \
         --db /hyperlane_db \
-        --originChainName opbnbtestnet \
+        --originChainName arbitrum \
         --reorgPeriod 1 \
         --validator.id "$VALIDATOR_NAME" \
         --checkpointSyncer.type localStorage \
-        --checkpointSyncer.path /hyperlane_db/opbnbtestnet_checkpoints \
+        --checkpointSyncer.path /hyperlane_db/arbitrum_checkpoints \
         --validator.key "0x$PRIVATE_KEY" \
-        --chains.opbnbtestnet.signer.key "0x$PRIVATE_KEY" \
-        --chains.opbnbtestnet.customRpcUrls "$RPC_URL" &
+        --chains.arbitrum.signer.key "0x$PRIVATE_KEY" \
+        --chains.arbitrum.customRpcUrls "$RPC_URL" &
 
     echo "节点已成功启动，日志可以通过查看容器日志获取。"
 }
@@ -221,8 +221,8 @@ install_and_start_polygon() {
     echo "节点已成功启动，日志可以通过查看容器日志获取。"
 }
 
-# 启动节点fantom
-install_and_start_fantom() {
+# 启动节点celo
+install_and_start_celo() {
     read -p "请输入 Validator Name: " VALIDATOR_NAME
 
     while true; do
@@ -243,14 +243,14 @@ install_and_start_fantom() {
         gcr.io/abacus-labs-dev/hyperlane-agent:agents-v1.0.0 \
         ./validator \
         --db /hyperlane_db \
-        --originChainName fantom \
+        --originChainName celo \
         --reorgPeriod 1 \
         --validator.id "$VALIDATOR_NAME" \
         --checkpointSyncer.type localStorage \
-        --checkpointSyncer.path /hyperlane_db/fantom_checkpoints \
+        --checkpointSyncer.path /hyperlane_db/celo_checkpoints \
         --validator.key "0x$PRIVATE_KEY" \
-        --chains.fantom.signer.key "0x$PRIVATE_KEY" \
-        --chains.fantom.customRpcUrls "$RPC_URL" &
+        --chains.celo.signer.key "0x$PRIVATE_KEY" \
+        --chains.celo.customRpcUrls "$RPC_URL" &
 
     echo "节点已成功启动，日志可以通过查看容器日志获取。"
 }
@@ -326,9 +326,9 @@ main_menu() {
         echo "================= Hyperlane 管理脚本 ================="
         echo "1) 安装基础环境"
         echo "2) 安装并启动bsctestnet节点"
-        echo "3) 安装并启动opbnbtestnet节点"
+        echo "3) 安装并启动arbitrum节点"
         echo "4) 安装并启动sepolia节点"
-        echo "5) 安装并启动fantom节点"
+        echo "5) 安装并启动celo节点"
         echo "6) 安装并启动polygon节点"
         echo "7) 安装并启动linea节点"
         echo "8) 查看容器日志"
@@ -339,9 +339,9 @@ main_menu() {
         case $choice in
             1) install_dep ;;
             2) install_and_start_bsctestnet ;;
-            3) install_and_start_opbnbtestnet ;;
+            3) install_and_start_arbitrum ;;
             4) install_and_start_sepolia ;;
-            5) install_and_start_fantom ;;
+            5) install_and_start_celo ;;
             6) install_and_start_polygon ;;
             7) install_and_start_linea ;;
             8) view_container_log ;;
