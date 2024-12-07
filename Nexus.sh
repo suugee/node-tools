@@ -1,17 +1,15 @@
 #!/bin/sh
-
-# 设置版本号
-current_version=2024120701
-
 # 检查是否为 root 用户
 if [ "$EUID" -ne 0 ]; then
     echo "请以 root 权限运行此脚本！"
     exit 1
 fi
 
+# 设置版本号
+current_version=2024120701
+
 NEXUS_HOME=$HOME/.nexus
 REPO_PATH=$NEXUS_HOME/network-api
-
 
 # 安装基础环境
 function install_dep(){
@@ -50,10 +48,10 @@ if [ -d "$REPO_PATH" ]; then
   (cd $REPO_PATH && git stash save && git fetch --tags)
 else
   mkdir -p $NEXUS_HOME
-  (cd $NEXUS_HOME && git clone https://github.com/nexus-xyz/network-api)
+  cd $NEXUS_HOME && git clone https://github.com/nexus-xyz/network-api
 fi
 
-(cd $REPO_PATH && git -c advice.detachedHead=false checkout $(git rev-list --tags --max-count=1))
+cd $REPO_PATH && git -c advice.detachedHead=false checkout $(git rev-list --tags --max-count=1)
 
 #等待修改成测试网 (cd $REPO_PATH/clients/cli && cargo run --release --bin prover -- beta.orchestrator.nexus.xyz)
 
@@ -86,15 +84,19 @@ fi
 
 if [ -d "$REPO_PATH" ]; then
   echo "$REPO_PATH exists. Updating.";
-  (cd $REPO_PATH && git stash save && git fetch --tags)
+  cd $REPO_PATH
+  git stash save && git fetch --tags
 else
   mkdir -p $NEXUS_HOME
-  (cd $NEXUS_HOME && git clone https://github.com/nexus-xyz/network-api)
+  cd $NEXUS_HOME
+  git clone https://github.com/nexus-xyz/network-api
 fi
 
-(cd $REPO_PATH && git -c advice.detachedHead=false checkout $(git rev-list --tags --max-count=1))
+cd $REPO_PATH 
+git -c advice.detachedHead=false checkout $(git rev-list --tags --max-count=1)
 
-(cd $REPO_PATH/clients/cli && screen -mS nexus cargo run --release --bin prover -- beta.orchestrator.nexus.xyz)
+cd $REPO_PATH/clients/cli
+screen -mS nexus cargo run --release --bin prover -- beta.orchestrator.nexus.xyz
 
 echo "看到成功信息后按键盘：Ctrl+a+d退出"
 
