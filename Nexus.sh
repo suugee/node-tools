@@ -1,4 +1,5 @@
 #!/bin/sh
+
 # 检查是否为 root 用户
 if [ "$EUID" -ne 0 ]; then
     echo "请以 root 权限运行此脚本！"
@@ -14,7 +15,7 @@ REPO_PATH=$NEXUS_HOME/network-api
 # 安装基础环境
 function install_dep(){
 sudo apt update
-sudo apt install -y git curl screen protobuf-compiler
+sudo apt install -y git curl screen protobuf-compiler build-essential pkg-config libssl-dev git-all
 rustc --version || curl https://sh.rustup.rs -sSf | sh
 }
 
@@ -110,7 +111,7 @@ function view_logs(){
 # 更新脚本
 function update_script(){
     # 指定URL
-    update_url=""
+    update_url="https://raw.githubusercontent.com/suugee/node-tools/refs/heads/main/Nexus.sh"
     file_name=$(basename "$update_url")
 
     # 下载脚本文件
